@@ -1,0 +1,52 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '35 - Search Insert Position',
+  description:
+    'Leetcode solution for 35 - Search Insert Position',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The LeetCode problem 35, "Search Insert Position," asks us to find the index where a target value should be inserted into a sorted array. If the target value is already present in the array, we need to return its index. Here's the problem statement for reference:
+
+**Problem:** Given a sorted array `nums` and a target value `target`, return the index where `target` should be inserted in `nums`. If `target` is already present in `nums`, then return the index of its first occurrence. 
+
+To solve this problem, we can use a modified binary search algorithm. We compare the target value with the middle element of the array and adjust the search range accordingly. If we find an exact match, we return the index. If not, we determine the insertion position based on the comparison results.
+
+Here's the implementation using this approach:
+
+```python
+def searchInsert(nums, target):
+    left, right = 0, len(nums) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return left
+```
+
+**Time Complexity:**
+
+The time complexity of this approach is O(log n), where n is the number of elements in the sorted array.
+
+- In each iteration, the search range is halved by comparing the target value with the middle element of the array.
+- This division allows us to eliminate half of the remaining elements at each step.
+- As a result, the algorithm has a logarithmic time complexity, O(log n).
+
+**Space Complexity:**
+
+The space complexity of this approach is O(1) because it only uses a constant amount of extra space for storing the variables `left`, `right`, `mid`, and the function's return value.
+
+Hence, the space complexity is O(1).
+
+This approach efficiently solves the problem by finding the correct insertion position in a sorted array, providing an optimal solution in terms of time and space complexity.

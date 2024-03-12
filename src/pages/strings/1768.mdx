@@ -1,0 +1,63 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1768 - Merge Strings Alternately',
+  description:
+    'Leetcode solution for 1768 - Merge Strings Alternately',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+Leetcode problem 1768, "Merge Strings Alternately," and discuss its time and space complexity.
+
+Problem Description:
+Given two strings, word1 and word2, merge the strings by adding letters in alternating order, starting with word1. If one of the strings is longer than the other, append the remaining letters of the longer string at the end of the merged string and return it.
+
+Solution:
+
+To solve this problem, we can use two pointers, one for each string, and a resulting string to store the merged string.
+
+Here's the step-by-step algorithm:
+
+1. Initialize two pointers: i = 0 (for word1) and j = 0 (for word2).
+2. Initialize an empty string to store the merged result.
+3. Iterate until both pointers are less than the respective string lengths.
+4. Append the character at word1[i] to the result string.
+5. Increment i by 1.
+6. Append the character at word2[j] to the result string.
+7. Increment j by 1.
+8. Repeat steps 4 to 7 until one of the pointers reaches the end of its respective string.
+9. Append the remaining letters of the longer string to the result string.
+10. Return the merged result string.
+
+Here's the Python code that implements the above algorithm:
+
+```python
+def mergeAlternately(word1, word2):
+    i, j = 0, 0
+    merged = ""
+
+    while i < len(word1) and j < len(word2):
+        merged += word1[i]
+        merged += word2[j]
+        i += 1
+        j += 1
+
+    merged += word1[i:]
+    merged += word2[j:]
+
+    return merged
+```
+
+Time Complexity:
+The algorithm iterates through both strings simultaneously once, so the time complexity is O(max(n, m)), where n and m are the lengths of word1 and word2, respectively.
+
+Space Complexity:
+The algorithm uses additional space to store the merged string, which can have a maximum length of n + m (assuming both strings are of length n and m). Therefore, the space complexity is O(n + m).
+
+Note that the space complexity can be reduced by using a list to store the characters instead of a string. In that case, the space complexity would be O(max(n, m)).
+
+I hope this explanation helps! Let me know if you have any further questions.

@@ -1,0 +1,60 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1244 - Design a Leaderboard',
+  description:
+    'Leetcode solution for 1244 - Design a Leaderboard',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+The LeetCode problem 1244, "Design a Leaderboard," asks us to design a leaderboard data structure with several operations. Here's the problem statement for reference:
+
+**Problem:** Design a leaderboard class that supports the following operations:
+- `void addScore(int playerId, int score)`: Insert a new score for a given player.
+- `int top(int K)`: Return the score sum of the top `K` players.
+- `void reset(int playerId)`: Reset the score of a player to 0.
+
+The leaderboard will contain at most `10000` players, and the scores range from `0` to `1000`. The operations `top` and `reset` will be called at most `10000` times in total.
+
+To solve this problem, we can use a combination of a hash map and a priority queue (or heap). The hash map will store the player IDs and their corresponding scores, and the priority queue will store the top `K` players based on their scores. Let's see the implementation:
+
+```python
+import heapq
+
+class Leaderboard:
+    def __init__(self):
+        self.scores = {}  # {playerId: score}
+
+    def addScore(self, playerId, score):
+        if playerId in self.scores:
+            self.scores[playerId] += score
+        else:
+            self.scores[playerId] = score
+
+    def top(self, K):
+        heap = []
+        for score in self.scores.values():
+            heapq.heappush(heap, score)
+            if len(heap) > K:
+                heapq.heappop(heap)
+        return sum(heap)
+
+    def reset(self, playerId):
+        del self.scores[playerId]
+```
+
+**Time Complexity:**
+
+- The `addScore` operation has a time complexity of O(1) since it only involves inserting or updating a score in the hash map.
+- The `top` operation iterates through all the player scores, which takes O(n) time, where n is the number of players. Additionally, maintaining the priority queue of size `K` takes O(n log K) time. Overall, the `top` operation has a time complexity of O(n log K).
+- The `reset` operation has a time complexity of O(1) since it only involves deleting a player's score from the hash map.
+
+**Space Complexity:**
+
+- The space complexity of the leaderboard class is O(n), where n is the number of players. This is because we store the player IDs and their scores in the hash map, which can take up to O(n) space in the worst case.
+
+Overall, this design efficiently handles the given operations within the specified constraints, providing an optimal solution in terms of time and space complexity.

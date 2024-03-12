@@ -1,0 +1,72 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-06',
+  title: '394 - Decode String',
+  description:
+    'Leetcode solution for 394 - Decode String',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+Problem Description:
+Given an encoded string, return its decoded string.
+
+The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+Solution:
+
+To solve this problem, we can use a stack to store the characters and numbers encountered while iterating through the encoded string.
+
+Here's the step-by-step algorithm:
+
+1. Initialize an empty stack.
+2. Iterate through each character in the encoded string.
+3. If the current character is a digit, start a new number.
+   - Multiply the existing number by 10 and add the current digit to it.
+4. If the current character is '[', push the current number and an empty string ('') to the stack.
+   - The number represents the repetition count, and the empty string will store the decoded string within the brackets.
+   - Reset the current number to 0.
+5. If the current character is a letter, append it to the top string in the stack.
+6. If the current character is ']', it indicates the end of the current repetition.
+   - Pop the top string and repetition count from the stack.
+   - Multiply the top string by the repetition count and append it to the new top string in the stack.
+7. After iterating through the entire encoded string, the final decoded string will be the only string in the stack.
+   - Return this string.
+
+Here's the Python code that implements the above algorithm:
+
+```python
+def decodeString(s):
+    stack = []
+    current_num = 0
+    current_string = ""
+
+    for char in s:
+        if char.isdigit():
+            current_num = current_num * 10 + int(char)
+        elif char == "[":
+            stack.append((current_string, current_num))
+            current_string = ""
+            current_num = 0
+        elif char == "]":
+            prev_string, repetition_count = stack.pop()
+            current_string = prev_string + repetition_count * current_string
+        else:
+            current_string += char
+
+    return current_string
+```
+
+Time Complexity:
+The algorithm iterates through each character in the encoded string once, so the time complexity is O(n), where n is the length of the encoded string.
+
+Space Complexity:
+The algorithm uses a stack to store intermediate results and parentheses, but the maximum depth of the stack will not exceed the length of the encoded string. Therefore, the space complexity is O(n).
+
+Note that the space complexity can be further reduced if we consider the output string itself as part of the space complexity. In that case, the space complexity would be O(m + n), where m is the length of the final decoded string.
+
+I hope this explanation helps! Let me know if you have any further questions.

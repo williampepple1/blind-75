@@ -1,0 +1,58 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '42 - Trapping Rain Water',
+  description:
+    'Leetcode solution for 42 - Trapping Rain Water',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+
+The LeetCode problem 42. Trapping Rain Water is defined as follows:
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+To solve this problem, you need to understand that the water trapped above a certain bar in the histogram will be determined by the lower of the highest bar to its left and right.
+
+Here's a Python solution for this problem using two pointers:
+
+```python
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if not height:
+            return 0
+
+        left, right = 0, len(height) - 1
+        left_max, right_max = height[left], height[right]
+        water = 0
+
+        while left <= right:
+            if height[left] <= height[right]:
+                if height[left] > left_max:
+                    left_max = height[left]
+                else:
+                    water += left_max - height[left]
+                left += 1
+            else:
+                if height[right] > right_max:
+                    right_max = height[right]
+                else:
+                    water += right_max - height[right]
+                right -= 1
+
+        return water
+```
+
+The idea behind the solution is to use two pointers, `left` and `right`. We maintain two variables, `left_max` and `right_max`, to store the maximum height of the bar from the start to the current position from left to right and from right to left, respectively. The amount of water that can be stored at a particular index is the minimum of `left_max` and `right_max` minus the height of the bar at the current position. We keep moving the `left` and `right` pointers towards each other and updating `left_max`, `right_max`, and `water` until `left` and `right` meet.
+
+**Time Complexity:**
+
+The time complexity is O(n), where n is the number of bars in the histogram. In the worst case, we have to visit all the bars once.
+
+**Space Complexity:**
+
+The space complexity is O(1), because we only need constant space to store the variables `left`, `right`, `left_max`, `right_max`, and `water`. We don't need any extra space that scales with the size of the input.

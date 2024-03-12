@@ -1,0 +1,47 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '3 - Longest Substring Without Repeating Characters',
+  description:
+    'Leetcode solution for 3 - Longest Substring Without Repeating Characters',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+The problem description for LeetCode 3. Longest Substring Without Repeating Characters is:
+
+Given a string `s`, find the length of the longest substring without repeating characters.
+
+To solve this problem, you can use a sliding window approach along with a dictionary (in Python) to keep track of the characters in the current substring and their indices. Start from the first character of the string and keep adding characters to the current substring until you encounter a character that is already in the current substring. When that happens, remove characters from the start of the current substring until the repeated character is removed. This can be done by using the stored index of the character from the dictionary. 
+
+Here's a Python solution:
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        char_dict = {}
+        max_len = start = 0
+        
+        for i, char in enumerate(s):
+            if char in char_dict and start <= char_dict[char]:
+                start = char_dict[char] + 1
+            else:
+                max_len = max(max_len, i - start + 1)
+                
+            char_dict[char] = i
+            
+        return max_len
+```
+
+In this code, `char_dict` is used to store the characters in the current substring and their indices. `max_len` stores the length of the longest substring without repeating characters found so far. `start` is the start index of the current substring. For each character, if it is already in the current substring (i.e., it is in `char_dict` and its index is greater than or equal to `start`), move `start` to the next index of the repeated character. Otherwise, update `max_len` if the length of the current substring is greater than `max_len`. After processing each character, update its index in `char_dict`.
+
+**Time Complexity:**
+
+The time complexity is O(n), where n is the length of the string. This is because we perform a single pass through the string, and dictionary operations (insertion and access) take constant time.
+
+**Space Complexity:**
+
+The space complexity is O(min(n, m)), where n is the length of the string and m is the size of the character set. In the worst case, all characters are distinct, so the size of the dictionary is equal to the size of the string. However, if the size of the character set is smaller than the size of the string (e.g., the string is very long but only contains a few distinct characters), the size of the dictionary is limited by the size of the character set.

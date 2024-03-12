@@ -1,0 +1,36 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: '1047 - Remove All Adjacent Duplicates In String',
+  description:
+    'Leetcode solution for 1047 - Remove All Adjacent Duplicates In String',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The problem "Remove All Adjacent Duplicates In String" from LeetCode asks:
+
+You are given a string `s` and you are required to process the string by iteratively choosing two adjacent, identical characters and removing them.
+
+The string is processed until no such pair of identical characters exist.
+
+Here is a Python solution using a stack:
+
+```python
+def removeDuplicates(s):
+    stack = []
+    for char in s:
+        if stack and stack[-1] == char:
+            stack.pop()
+        else:
+            stack.append(char)
+    return ''.join(stack)
+```
+
+This solution uses a stack to keep track of the characters. For each character in the string `s`, if the stack is not empty and the top character in the stack is the same as the current character, we remove the top character from the stack. Otherwise, we push the current character into the stack. In the end, we join all characters in the stack into a string and return it.
+
+The time complexity of this solution is O(n), where n is the length of the string `s`. We have one loop that goes through all characters in `s`, and for each character, the time complexity of the stack operations (push, pop, and get the top character) is O(1).
+
+The space complexity is O(n), where n is the length of the string `s`. In the worst case, if there are no adjacent duplicates in `s`, we need to store all characters in the stack.

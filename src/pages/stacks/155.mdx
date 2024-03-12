@@ -1,0 +1,55 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: '155 - Minstack',
+  description:
+    'Leetcode solution for 155 - Minstack',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The problem "Min Stack" from LeetCode asks:
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+Here's a Python solution using two stacks:
+
+```python
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.min_stack = []
+
+    def push(self, x):
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
+
+    def pop(self):
+        if self.stack:
+            if self.stack[-1] == self.min_stack[-1]:
+                self.min_stack.pop()
+            return self.stack.pop()
+
+    def top(self):
+        if self.stack:
+            return self.stack[-1]
+
+    def getMin(self):
+        if self.min_stack:
+            return self.min_stack[-1]
+```
+
+In this solution, we use two stacks: `stack` to store all elements and `min_stack` to store the minimum elements.
+ When we push an element onto `stack`, if `min_stack` is empty or the element is less than or equal to the top element of `min_stack`, we also push it onto `min_stack`. When we pop an element from `stack`, if it's the same as the top element of `min_stack`, we also pop it from `min_stack`. `top` and `getMin` return the top element of `stack` and `min_stack` respectively.
+
+The time complexity of this solution is O(1) for each operation.
+
+This is because we can perform `push`, `pop`, `top`, and `getMin` in constant time. 
+
+The space complexity is O(n), where n is the number of elements in the stack. 
+
+We use additional space to store the `min_stack`, but it's worth mentioning that in the worst case, when every element is less than or equal to the previous ones, the size of `min_stack` will be equal to the size of `stack`, which makes the space complexity O(n).

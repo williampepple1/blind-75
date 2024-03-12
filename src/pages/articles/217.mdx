@@ -1,0 +1,70 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: '217 - Contains Duplicate',
+  description:
+    'Leetcode solution for 217 - Contains Duplicate',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+Sure! The LeetCode problem 217, "Contains Duplicate," asks whether an array contains any duplicates. Here's the problem statement for reference:
+
+**Problem:** Given an array of integers, find if the array contains any duplicates.
+
+**Example 1:**
+```
+Input: [1,2,3,1]
+Output: true
+```
+
+**Example 2:**
+```
+Input: [1,2,3,4]
+Output: false
+```
+
+To solve this problem, we can use various approaches. Let's discuss two common solutions: using a hash set and sorting the array.
+
+**Approach 1: Using a Hash Set**
+
+One way to solve this problem is by using a hash set. We can iterate through the array and add each element to the hash set. If an element is already present in the set, it means there is a duplicate, and we can return `true`. If we finish iterating through the array without finding any duplicates, we return `false`.
+
+Here's the Python code implementing this approach:
+
+```python
+def containsDuplicate(nums):
+    num_set = set()
+    for num in nums:
+        if num in num_set:
+            return True
+        num_set.add(num)
+    return False
+```
+
+**Time Complexity:** In this approach, we iterate through the array once, which takes O(n) time, where n is the number of elements in the array. The `in` operator on a hash set has an average time complexity of O(1) since it uses a hash function to determine membership. Therefore, the overall time complexity of this approach is O(n).
+
+**Space Complexity:** We use a hash set to store the elements, which can take up to O(n) space in the worst case if all the elements are unique.
+
+**Approach 2: Sorting the Array**
+
+Another approach is to sort the array first and then check if any adjacent elements are equal. If we find any equal adjacent elements, we return `true`; otherwise, we return `false`.
+
+Here's the Python code implementing this approach:
+
+```python
+def containsDuplicate(nums):
+    nums.sort()
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i-1]:
+            return True
+    return False
+```
+
+**Time Complexity:** Sorting the array takes O(n log n) time, where n is the number of elements in the array. After sorting, we iterate through the array once, which takes O(n) time. Therefore, the overall time complexity of this approach is dominated by the sorting step and becomes O(n log n).
+
+**Space Complexity:** We modify the input array in-place, so the space complexity is O(1).
+
+Both approaches provide a solution to the problem, but the choice of approach depends on the specific requirements and constraints of the problem at hand.

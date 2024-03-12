@@ -1,0 +1,57 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: ' 1274 - Number of Ships in a Rectangle',
+  description:
+    'Leetcode solution for  1274 - Number of Ships in a Rectangle',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+
+The problem 1274. Number of Ships in a Rectangle from LeetCode is defined as follows:
+
+On the sea represented by a cartesian plane, each ship is located at an integer point, and each integer point may contain up to 1 ship.
+
+You have a function Sea.hasShips(topRight, bottomLeft) which takes two points as arguments and returns a boolean which is true if and only if there is at least one ship in the rectangle represented by the given points, including on the boundary.
+
+Given two points, which are the top right and bottom left corners of a rectangle, return the number of ships present in that rectangle. It is guaranteed that there are at most 10 ships in that rectangle.
+
+Submissions making more than 400 calls to hasShips will be judged Wrong Answer. Also, any solutions that attempt to circumvent the judge will result in disqualification.
+
+For this problem, we use a divide and conquer approach. We split the area into four quadrants and recursively count the ships in each quadrant.
+
+Here's a Python solution assuming `Sea` is a class with a `hasShips` method:
+
+```python
+# This is the Sea's API interface.
+# You should not implement it, or speculate about its implementation
+# class Sea(object):
+#    def hasShips(self, topRight: 'Point', bottomLeft: 'Point') -> bool:
+
+class Solution(object):
+    def countShips(self, sea: 'Sea', topRight: 'Point', bottomLeft: 'Point') -> int:
+        if not sea.hasShips(topRight, bottomLeft):
+            return 0
+        if topRight.x == bottomLeft.x and topRight.y == bottomLeft.y:
+            return 1
+
+        mid_x = (topRight.x + bottomLeft.x) // 2
+        mid_y = (topRight.y + bottomLeft.y) // 2
+
+        return self.countShips(sea, Point(mid_x, mid_y), bottomLeft) + \
+               self.countShips(sea, Point(topRight.x, mid_y), Point(mid_x + 1, bottomLeft.y)) + \
+               self.countShips(sea, Point(mid_x, topRight.y), Point(bottomLeft.x, mid_y + 1)) + \
+               self.countShips(sea, topRight, Point(mid_x + 1, mid_y + 1))
+```
+
+**Time Complexity:**
+
+The time complexity is O(n), where n is the number of ships. This is because in the worst-case scenario, we have to call the `hasShips` method once for each ship, and each call to `hasShips` takes constant time. In practice, the actual number of calls to `hasShips` will be less than n, because we can skip quadrants that don't contain any ships.
+
+**Space Complexity:**
+
+The space complexity is O(log n), where n is the number of ships. This is because of the recursion stack used in the `countShips` method. The depth of the recursion is proportional to the number of times we can split the area before reaching an area that contains at most one ship, which is log(n).

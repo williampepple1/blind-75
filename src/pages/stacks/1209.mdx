@@ -1,0 +1,58 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: '1209 - Remove All Adjacent Duplicates in String II',
+  description:
+    'Leetcode solution for 1209 - Remove All Adjacent Duplicates in String II ',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The LeetCode problem 1209, "Remove All Adjacent Duplicates in String II," asks us to remove all adjacent duplicates of length `k` from a given string. Here's the problem statement for reference:
+
+**Problem:** Given a string `s`, a `k` value, and an integer `k`, we need to remove all the adjacent duplicates of length `k` from `s` and return the modified string.
+
+To solve this problem, we can use a stack to keep track of the characters and their frequencies. We iterate through each character in the string and push it onto the stack. Whenever the frequency of the character reaches `k`, we pop `k` characters from the stack.
+
+Here's the implementation using this approach:
+
+```python
+def removeDuplicates(s, k):
+    stack = []
+
+    for char in s:
+        if not stack or stack[-1][0] != char:
+            stack.append([char, 1])
+        else:
+            stack[-1][1] += 1
+            if stack[-1][1] == k:
+                stack.pop()
+
+    result = ""
+    for char, count in stack:
+        result += char * count
+
+    return result
+```
+
+**Time Complexity:**
+
+The time complexity of this approach is O(n), where n is the length of the input string `s`.
+
+- We iterate through each character in the string once, performing constant-time operations for each character.
+- The operations include pushing and popping elements from the stack, checking the top of the stack, and appending characters to the result string.
+
+Therefore, the overall time complexity is O(n).
+
+**Space Complexity:**
+
+The space complexity of this approach is O(n), where n is the length of the input string `s`.
+
+- In the worst case, all characters in the string are unique, and we need to store each character and its frequency on the stack.
+- The size of the stack can be at most equal to the length of the string.
+
+Hence, the space complexity is O(n).
+
+This approach efficiently solves the problem by removing adjacent duplicates of length `k` using a stack, providing an optimal solution in terms of time and space complexity.

@@ -1,0 +1,65 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1396 - Design an Underground System',
+  description:
+    'Leetcode solution for 1396 - Design an Underground System',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+The problem you're referring to is a question from LeetCode titled "Design Underground System". The problem description is as follows:
+
+>Implement the class UndergroundSystem that supports three methods:
+>1. `checkIn(int id, string stationName, int t)`
+>2. `checkOut(int id, string stationName, int t)`
+>3. `getAverageTime(string startStation, string endStation)`
+
+> Each method will be used as follow:
+
+>1. `checkIn(int id, string stationName, int t)`: A customer with a card id equal to id, gets in the station stationName at time t.
+>2. `checkOut(int id, string stationName, int t)`: A customer with a card id equal to id, gets out from the station stationName at time t.
+>3. `getAverageTime(string startStation, string endStation)`: Returns the average time to travel between the startStation and the endStation. The average time is computed from all the previous traveling from startStation to endStation that happened directly.
+
+> Call to `checkIn` and `checkOut` methods is always in chronological order.
+
+We can solve this problem using hash maps in Python. The key to this problem is that the check in and check out of a customer will always be in pairs.
+
+Here is a simple implementation:
+
+```python
+class UndergroundSystem:
+    def __init__(self):
+        self.check_in_data = {}
+        self.journey_data = {}
+
+    def checkIn(self, id: int, stationName: str, t: int) -> None:
+        self.check_in_data[id] = [stationName, t]
+
+    def checkOut(self, id: int, stationName: str, t: int) -> None:
+        # Look up the check in station and time.
+        start_station, start_t = self.check_in_data.pop(id)
+        journey = (start_station, stationName)
+
+        # Record journey data.
+        if journey not in self.journey_data:
+            self.journey_data[journey] = [t - start_t, 1]
+        else:
+            self.journey_data[journey][0] += t - start_t
+            self.journey_data[journey][1] += 1
+
+    def getAverageTime(self, startStation: str, endStation: str) -> float:
+        total_time, total_trips = self.journey_data[(startStation, endStation)]
+        # Compute average time.
+        return total_time / total_trips
+```
+
+Time complexity:
+- `checkIn` and `checkOut` operations are O(1) because they perform constant-time operations: adding and retrieving a key in a dictionary. 
+- `getAverageTime` is also O(1) because it retrieves the time and count from a dictionary and computes the average. 
+
+Space complexity:
+- This algorithm uses O(P + S^2) space where P is the number of passengers and S is the number of stations. This is because we use a dictionary to store check-in data for each passenger (O(P)) and a dictionary to store journey data for each pair of stations (O(S^2)). In a worst-case scenario, a passenger could travel between every pair of stations, hence the quadratic term.

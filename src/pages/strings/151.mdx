@@ -1,0 +1,40 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: ' 151 - Reverse Words in a String',
+  description:
+    'Leetcode solution for 125 - Reverse Words in a String',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+
+Given an input string `s`, reverse the order of the words.
+
+A word is defined as a sequence of non-space characters. The words in `s` will be separated by at least one space.
+
+Return a string of the words in reverse order concatenated by a single space.
+
+Note that `s` may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+A straightforward approach in Python is to use built-in functions. Here's how you can do it:
+
+```python
+def reverseWords(s):
+    words = s.split()  # split the string into words
+    words.reverse()    # reverse the list of words
+    return ' '.join(words)  # join the words back into a string with spaces
+```
+
+Let's walk through the function:
+
+1. The `split()` function splits the input string `s` into a list of words. It uses spaces as the delimiter and automatically removes leading, trailing, and consecutive spaces. The time complexity is O(n), where n is the length of `s`, and the space complexity is also O(n), as we store all words in a list.
+
+2. The `reverse()` function reverses the order of words in the list. The time complexity is O(n), and the space complexity is O(1) as it reverses the list in place.
+
+3. The `join()` function joins the words back into a string, separated by single spaces. The time complexity is O(n), and the space complexity is O(n) for the output string.
+
+So, overall, the time complexity of the function is O(n), and the space complexity is O(n).

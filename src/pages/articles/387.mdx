@@ -1,0 +1,39 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: '387 - First Unique Character in a String',
+  description:
+    'Leetcode solution for 387 - First Unique Character in a String',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The problem "First Unique Character in a String" from LeetCode asks for finding the index of the first non-repeating character in a given string. 
+
+If it doesn't exist, return -1.
+
+Here is a Python solution using a dictionary to count the characters and then finding the first unique character:
+
+```python
+def firstUniqChar(s):
+    count = {}
+    for c in s:
+        if c in count:
+            count[c] += 1
+        else:
+            count[c] = 1
+
+    for i, c in enumerate(s):
+        if count[c] == 1:
+            return i
+    return -1
+
+
+```
+
+In this solution, we first iterate over the string s to count the occurrences of each character. 
+Then, we iterate over the string s again, and for each character, we check if its count is 1 (i.e., it's unique).
+If we find a unique character, we return its index. 
+If we don't find any unique character, we return -1.

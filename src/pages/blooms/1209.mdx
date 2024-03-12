@@ -1,0 +1,59 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1209 - Two City Scheduling',
+  description:
+    'Leetcode solution for 1209 - Two City Scheduling',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+The LeetCode problem 1029. Two City Scheduling is as follows:
+
+There are 2N people a company is planning to interview. The cost of flying the i-th person to city A is `costs[i][0]`, and the cost of flying the i-th person to city B is `costs[i][1]`.
+
+Return the minimum cost to fly every person to a city such that exactly N people arrive in each city.
+
+We can solve this problem using a greedy approach. Here's how:
+
+1. We first send everyone to city A, so we calculate the total cost.
+2. However, we have to send N people to city B. The additional cost of sending the i-th person to city B is `costs[i][1] - costs[i][0]`. So we calculate the additional cost for everyone.
+3. We sort the additional costs in ascending order, and sum up the first N additional costs to the total cost. This is because the first N additional costs are the minimum additional costs for sending N people to city B.
+
+Here's the Python code for this solution:
+
+```python
+class Solution:
+    def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+        # Calculate the additional cost of sending to city B instead of city A
+        diffs = [(B - A, i) for i, (A, B) in enumerate(costs)]
+        
+        # Sort the additional costs in ascending order
+        diffs.sort()
+        
+        N = len(costs) // 2
+        total = 0
+        
+        # Send the first N people to city A and the rest to city B
+        for i in range(len(costs)):
+            A = costs[i][0]
+            B = costs[i][1]
+            
+            if i < N:
+                total += A
+            else:
+                total += B
+                
+        return total
+```
+
+**Time Complexity:**
+
+The time complexity is O(n log n) due to the sorting of the differences array. Here, n refers to the total number of people, which is twice the number of people to be sent to each city.
+
+**Space Complexity:**
+
+The space complexity is O(n) because we store the differences for each person in an array. The maximum size of this array is equal to the total number of people.

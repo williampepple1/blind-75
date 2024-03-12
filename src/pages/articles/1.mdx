@@ -1,0 +1,49 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-06-05',
+  title: ' 1 - Two Sum',
+  description:
+    'Leetcode solution for 1 - Two Sum',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The "Two Sum" problem is one of the most famous problems on Leetcode, and it's also a very common question in job interviews.
+
+Here's the problem statement for context:
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.
+
+In Python, one of the most efficient ways to solve this problem is by using a hash map (dict in Python).
+
+Here is the Python code:
+
+```python
+def twoSum(nums, target):
+    num_dict = {}
+    
+    for i, num in enumerate(nums):
+        difference = target - num
+        if difference in num_dict:
+            return [num_dict[difference], i]
+        num_dict[num] = i
+
+    return None
+
+
+```
+
+Here's how it works:
+
+The __init__ method initializes an empty dictionary and an empty list.
+The insert method checks if the value is already in the dictionary. If yes, it returns False.
+
+If no, it adds the value to the dictionary with the value as the key and the current length of the list as the value, then appends the value to the end of the list and returns True.
+
+The remove method checks if the value is in the dictionary. If no, it returns False. If yes, it swaps the value with the last element in the list, then removes the last element from the list and deletes the value from the dictionary, and returns True.
+
+The getRandom method returns a random element from the list.
+
+The time complexity of all operations is O(1) on average, because dictionary and list operations take constant time on average. The space complexity is O(n), where n is the number of elements in the set, because we use a dictionary and a list to store the elements.

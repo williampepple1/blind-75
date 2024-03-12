@@ -1,0 +1,54 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1656 - Design an Ordered Stream',
+  description:
+    'Leetcode solution for 1656 - Design an Ordered Stream',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+The LeetCode problem 1656. Design an Ordered Stream is as follows:
+
+There is a stream of `n` `(id, value)` pairs arriving in an arbitrary order, where `id` is an integer between `1` and `n` and `value` is a string. No two pairs have the same `id`.
+
+Design a stream that returns the values in increasing order of their IDs by returning a chunk (list) of values after each insertion. The concatenation of all the chunks should result in a list of the sorted values.
+
+Implement the `OrderedStream` class:
+
+`OrderedStream(int n)`: Constructs the stream to take `n` values.
+`String[] insert(int id, String value)`: Inserts the pair `(id, value)` into the stream, then returns the largest possible chunk of currently inserted values that appear next in the order.
+
+Here is an implementation in Python:
+
+```python
+class OrderedStream:
+
+    def __init__(self, n: int):
+        self.buffer = [None]*n
+        self.ptr = 0
+
+    def insert(self, id: int, value: str):
+        self.buffer[id - 1] = value  # store the value
+        chunk = []
+        
+        while self.ptr < len(self.buffer) and self.buffer[self.ptr] is not None:
+            chunk.append(self.buffer[self.ptr])
+            self.ptr += 1
+        
+        return chunk
+```
+In the constructor, we initialize an array `buffer` of size `n` and set all its elements to `None`. We also initialize a pointer `ptr` to 0, which keeps track of the first non-null element in the array.
+
+In the `insert` method, we insert the value at the appropriate index in the `buffer` array. Then, we start from the current `ptr` position and append all the non-null values to the chunk until we hit a `None` value or reach the end of the array. Finally, we update the `ptr` to the index of the next `None` value.
+
+**Time Complexity:**
+
+- The time complexity of the `insert` operation is O(n) in the worst case because in the worst case, we may need to traverse all the elements in the buffer. However, the average time complexity is O(k), where k is the number of elements in the chunk, because we move the pointer `ptr` forward after each insertion and don't go back.
+
+**Space Complexity:**
+
+- The space complexity of this implementation is O(n), where n is the number of elements to be inserted into the stream. This is because we store all the elements in the `buffer` array.

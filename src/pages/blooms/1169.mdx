@@ -1,0 +1,66 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'William Pepple',
+  date: '2023-05-23',
+  title: '1169 - Invalid Transactions',
+  description:
+    'Leetcode solution for 1169 - Invalid Transactions',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+
+
+
+The problem description for LeetCode 1169. Invalid Transactions is:
+
+A transaction is possibly invalid if:
+
+- the amount exceeds $1000, or;
+- if it occurs within (and including) 60 minutes of another transaction with the same name in a different city.
+
+You are given an array of strings transactions where `transactions[i]` consists of comma-separated values representing the name, time (in minutes), amount, and city of the transaction.
+
+Return a list of transactions that are possibly invalid. You may return the answer in any order.
+
+Here is a Python solution using a dictionary and list to store transactions for each name:
+
+```python
+class Solution:
+    def invalidTransactions(self, transactions):
+        tx_dict = collections.defaultdict(list)
+        res = []
+        
+        for tx in transactions:
+            name, time, amount, city = tx.split(',')
+            tx_dict[name].append((int(time), int(amount), city, tx))
+            
+        for name, txs in tx_dict.items():
+            txs.sort()  # sort by time
+            
+            for i, (time, amount, city, tx) in enumerate(txs):
+                if amount > 1000:
+                    res.append(tx)
+                    continue
+                
+                if i > 0 and time - txs[i - 1][0] <= 60 and city != txs[i - 1][2]:
+                    res.append(tx)
+                if i + 1 < len(txs) and txs[i + 1][0] - time <= 60 and city != txs[i + 1][2]:
+                    res.append(tx)
+                    
+        return res
+```
+
+In this solution, we first create a dictionary where each key is a name and the corresponding value is a list of transactions for that name. Each transaction is a tuple of time, amount, city, and the original transaction string.
+
+Then we go through each list of transactions, sort them by time, and check each transaction for the two conditions mentioned in the problem. If the amount exceeds $1000, or if it occurs within 60 minutes of another transaction with the same name but a different city, we add the original transaction string to the result.
+
+**Time Complexity:**
+
+The time complexity is O(n log(n)) where n is the number of transactions. This is because we sort the transactions for each name. In the worst-case scenario, all transactions are made by the same person and we have to sort all of them.
+
+**Space Complexity:**
+
+The space complexity is O(n), where n is the number of transactions. This is because we store all transactions in a dictionary and a list. In the worst-case scenario, all transactions are made by different people and we have to store all of them in the dictionary.
